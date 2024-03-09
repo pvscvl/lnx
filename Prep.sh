@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#    bash -c "$(wget -qLO - https://raw.githubusercontent.com/pvscvl/lnx/main/Prep.sh)"
 
 # FORMATTING
 	DEFAULT=$(tput sgr0)
@@ -31,27 +33,97 @@
 	Detected_Hostname=$(hostname -f)
 
 
+# MSG Functions
+
+	function msg_info() {
+		local msg="$1"
+		printf "%b ${msg}\\n" "${INFO}"
+	}
 
 
-msg_info "${ITALICS}${GREEN}Main PPS Version: ${DEFAULT}${BOLD}${YELLOW}$VERSION ${DEFAULT}"
-msg_info "${ITALICS}${GREEN}PPS-vars Version: ${DEFAULT}${BOLD}${YELLOW}$VARVERSION ${DEFAULT}"
-msg_info "${ITALICS}${GREEN}PPS-func Version: ${DEFAULT}${BOLD}${YELLOW}$FUNCVERSION ${DEFAULT}"
-echo ""
-msg_info "${BOLD}Hostname: ${DEFAULT}${ITALICS}$hostsys ${DEFAULT}"
-msg_info "${BOLD}Virtual environment: ${DEFAULT}${ITALICS}$detected_env${DEFAULT}"
-msg_info "${BOLD}Detected OS: ${DEFAULT}${ITALICS}$detected_os $detected_version${DEFAULT}"
-msg_info "${BOLD}Detected architecture: ${DEFAULT}${ITALICS}${detected_architecture}${DEFAULT}"
+	function msg_ok() {
+		local msg="$1"
+		printf "%b ${msg}\\n" "${TICK}"
+	}
+
+
+	function msg_no() {
+		local msg="$1"
+		printf "%b ${msg}\\n" "${CROSS}"
+	}
+
+
+	function msg_warn() {
+		local msg="$1"
+		printf "%b ${msg}\\n" "${WARN}"
+	}
+
+
+# Functions
+
+	function get_mac() {
+		local interface
+		interface=$(ip route | awk '/default/ {print $5}')
+
+		local mac_address
+		mac_address=$(ip link show "$interface" | awk '/ether/ {print $2}')
+
+		local ip_address
+		ip_address=$(ip addr show dev "$interface" | awk '/inet / {print $2}')
+		echo "$mac_address"
+	}
+
+
+	function get_ip() {
+		local interface
+		interface=$(ip route | awk '/default/ {print $5}')
+
+		local mac_address
+		mac_address=$(ip link show "$interface" | awk '/ether/ {print $2}')
+
+		local ip_address
+		ip_address=$(ip addr show dev "$interface" | awk '/inet / {print $2}')
+		echo "$ip_address"
+	}
+
+
+	function get_interface() {
+		local interface
+		interface=$(ip route | awk '/default/ {print $5}')
+
+		local mac_address
+		mac_address=$(ip link show "$interface" | awk '/ether/ {print $2}')
+
+		local ip_address
+		ip_address=$(ip addr show dev "$interface" | awk '/inet / {print $2}')
+		echo "$interface"
+	}
+
+
+
+	local_ip=$(get_ip)
+	local_mac=$(get_mac)
+	local_if=$(get_interface)
+
+msg_info "${BOLD}Hostname: ${DEFAULT}${ITALICS}${Detected_Hostname}${DEFAULT}"
+msg_info "${BOLD}Virtual environment: ${DEFAULT}${ITALICS}${Detected_Env}${DEFAULT}"
+msg_info "${BOLD}Detected OS: ${DEFAULT}${ITALICS}${Detected_OS} ${Detected_Version}${DEFAULT}"
+msg_info "${BOLD}Detected architecture: ${DEFAULT}${ITALICS}${Detected_Architecture}${DEFAULT}"
 msg_info "${BOLD}IP Address: ${DEFAULT}${ITALICS}${local_ip}${DEFAULT}"
 msg_info "${BOLD}MAC Address: ${DEFAULT}${ITALICS}${local_mac}${DEFAULT}"
 msg_info "${BOLD}Interface: ${DEFAULT}${ITALICS}${local_if}${DEFAULT}"
 echo ""
-msg_info "${BOLD}Timezone: ${DEFAULT}${ITALICS}$chktz${DEFAULT}"
-
+#msg_info "${BOLD}Timezone: ${DEFAULT}${ITALICS}$chktz${DEFAULT}"
 if grep -q "Europe/Berlin" /etc/timezone ; then
-	echo -n ""
+	msg_ok "${BOLD}Timezone: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
 else
+	msg_warn "${BOLD}Timezone: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
+ 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to Europe/Berlin... ${DEFAULT"
 	timedatectl set-timezone Europe/Berlin
-	chktz=$(cat /etc/timezone)
-	msg_ok "${BOLD}Timezone set to: ${DEFAULT}${ITALICS}$chktz${DEFAULT}"        
+	Detected_Timezone=$(cat /etc/timezone)
+	msg_ok "${BOLD}Timezone set to: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"        
 fi
+
+apt update &>/dev/null
+apt install ncdu
 
