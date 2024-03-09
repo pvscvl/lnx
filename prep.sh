@@ -120,16 +120,16 @@ msg_info "Hostname:\\t\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Hostname}${DEF
 msg_info "Virtual environment:\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Env}${DEFAULT}"
 msg_info "Detected OS:\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_OS} ${Detected_Version}${DEFAULT}"
 msg_info "Detected architecture:\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Architecture}${DEFAULT}"
+msg_info "Interface:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_if}${DEFAULT}"
 msg_info "IP Address:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_ip}${DEFAULT}"
 msg_info "MAC Address:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_mac}${DEFAULT}"
-msg_info "Interface:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_if}${DEFAULT}"
 echo ""
 #msg_info "${BOLD}Timezone: ${DEFAULT}${ITALICS}$chktz${DEFAULT}"
 if grep -q "Europe/Berlin" /etc/timezone ; then
 	msg_ok "Timezone:\\t\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"
 else
 	msg_warn "Timezone:\\t\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"
- 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to\\t${BOLD}Europe/Berlin${DEFAULT}"
+ 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to:\\t${BOLD}Europe/Berlin${DEFAULT}"
 	timedatectl set-timezone Europe/Berlin
 	Detected_Timezone=$(cat /etc/timezone)
 	msg_ok "Timezone set to:\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"        
@@ -142,4 +142,6 @@ echo "source /root/.bashrc2" >> /root/.bashrc
 
 apt update &>/dev/null
 apt install ncdu
+apt install htop
+
 
