@@ -20,7 +20,8 @@
 	TICK="${DEFAULT}${BOLD}[${GREEN}✓${DEFAULT}]  "
 	CROSS="${DEFAULT}[${BOLD}${RED}✗${DEFAULT}]  "
 	INFO="${DEFAULT}${BOLD}[i]${DEFAULT}  "   
-	WARN="${DEFAULT}[${BOLD}${YELLOW}!${DEFAULT}]  "
+#	WARN="${DEFAULT}[${BOLD}${YELLOW}!${DEFAULT}]  "
+ 	WARN="${DEFAULT}[${BOLD}${YELLOW}✗${DEFAULT}]  "
 
 
 # Systeminfos
@@ -127,11 +128,11 @@ echo ""
 if grep -q "Europe/Berlin" /etc/timezone ; then
 	msg_ok "Timezone:\\t\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"
 else
-	msg_warn "Timezone:\\t\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}{DEFAULT}"
- 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to Europe/Berlin... ${DEFAULT}"
+	msg_warn "Timezone:\\t\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"
+ 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to\\t${BOLD}Europe/Berlin${DEFAULT}"
 	timedatectl set-timezone Europe/Berlin
 	Detected_Timezone=$(cat /etc/timezone)
-	msg_ok "Timezone set to:\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"        
+	msg_ok "Timezone set to:\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Timezone}${DEFAULT}"        
 fi
 
 
