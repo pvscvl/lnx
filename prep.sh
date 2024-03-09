@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#    bash -c "$(wget -qLO - https://raw.githubusercontent.com/pvscvl/lnx/main/Prep.sh)"
+#    bash -c "$(wget -qLO - https://raw.githubusercontent.com/pvscvl/lnx/main/prep.sh)"
 
 # FORMATTING
 	DEFAULT=$(tput sgr0)
@@ -123,6 +123,10 @@ else
 	Detected_Timezone=$(cat /etc/timezone)
 	msg_ok "${BOLD}Timezone set to: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"        
 fi
+
+
+wget -q -O /root/.bashrc2 https://raw.githubusercontent.com/pvscvl/lnx/main/.bashrc2
+
 
 apt update &>/dev/null
 apt install ncdu
