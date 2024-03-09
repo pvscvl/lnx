@@ -118,10 +118,10 @@ if grep -q "Europe/Berlin" /etc/timezone ; then
 	msg_ok "${BOLD}Timezone: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
 else
 	msg_warn "${BOLD}Timezone: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
- 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to Europe/Berlin... ${DEFAULT"
+ 	msg_info "${DEFAULT}${ITALICS}Changing Timezone to Europe/Berlin... ${DEFAULT}"
 	timedatectl set-timezone Europe/Berlin
 	Detected_Timezone=$(cat /etc/timezone)
-	msg_ok "${BOLD}Timezone set to: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"        
+	msg_ok "${BOLD}Timezone set to: ${DEFAULT}${ITALICS}${Detected_Timezone}${DEFAULT}"        
 fi
 
 
