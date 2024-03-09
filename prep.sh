@@ -106,23 +106,33 @@
 	local_if=$(get_interface)
 
 msg_info "${BOLD}Hostname: ${DEFAULT}${ITALICS}${Detected_Hostname}${DEFAULT}"
-msg_info "Hostname: ${DEFAULT}${BOLD}${ITALICS}${Detected_Hostname}${DEFAULT}"
+
 msg_info "${BOLD}Virtual environment: ${DEFAULT}${ITALICS}${Detected_Env}${DEFAULT}"
 msg_info "${BOLD}Detected OS: ${DEFAULT}${ITALICS}${Detected_OS} ${Detected_Version}${DEFAULT}"
 msg_info "${BOLD}Detected architecture: ${DEFAULT}${ITALICS}${Detected_Architecture}${DEFAULT}"
 msg_info "${BOLD}IP Address: ${DEFAULT}${ITALICS}${local_ip}${DEFAULT}"
 msg_info "${BOLD}MAC Address: ${DEFAULT}${ITALICS}${local_mac}${DEFAULT}"
 msg_info "${BOLD}Interface: ${DEFAULT}${ITALICS}${local_if}${DEFAULT}"
+
+
+
+msg_info "Hostname:\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Hostname}${DEFAULT}"
+msg_info "Virtual environment:\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Env}${DEFAULT}"
+msg_info "Detected OS:\\t\\t${DEFAULT}${BOLD}${ITALICS}${Detected_OS} ${Detected_Version}${DEFAULT}"
+msg_info "Detected architecture:\\t${DEFAULT}${BOLD}${ITALICS}${Detected_Architecture}${DEFAULT}"
+msg_info "IP Address:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_ip}${DEFAULT}"
+msg_info "MAC Address:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_mac}${DEFAULT}"
+msg_info "Interface:\\t\\t${DEFAULT}${BOLD}${ITALICS}${local_if}${DEFAULT}"
 echo ""
 #msg_info "${BOLD}Timezone: ${DEFAULT}${ITALICS}$chktz${DEFAULT}"
 if grep -q "Europe/Berlin" /etc/timezone ; then
-	msg_ok "${BOLD}Timezone: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
+	msg_ok "${BOLD}Timezone:\\t\\t${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
 else
-	msg_warn "${BOLD}Timezone: ${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
+	msg_warn "${BOLD}Timezone:\\t\\t${DEFAULT}${ITALICS}${Detected_Timezone}{DEFAULT}"
  	msg_info "${DEFAULT}${ITALICS}Changing Timezone to Europe/Berlin... ${DEFAULT}"
 	timedatectl set-timezone Europe/Berlin
 	Detected_Timezone=$(cat /etc/timezone)
-	msg_ok "${BOLD}Timezone set to: ${DEFAULT}${ITALICS}${Detected_Timezone}${DEFAULT}"        
+	msg_ok "${BOLD}Timezone set to:\\t${DEFAULT}${ITALICS}${Detected_Timezone}${DEFAULT}"        
 fi
 
 
