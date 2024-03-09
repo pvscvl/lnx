@@ -126,6 +126,7 @@ fi
 
 
 wget -q -O /root/.bashrc2 https://raw.githubusercontent.com/pvscvl/lnx/main/.bashrc2
+echo "source /root/.bashrc2" >> /root/.bashrc
 
 
 apt update &>/dev/null
