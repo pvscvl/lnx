@@ -106,6 +106,7 @@
 	local_if=$(get_interface)
 
 msg_info "${BOLD}Hostname: ${DEFAULT}${ITALICS}${Detected_Hostname}${DEFAULT}"
+msg_info "Hostname: ${DEFAULT}${BOLD}${ITALICS}${Detected_Hostname}${DEFAULT}"
 msg_info "${BOLD}Virtual environment: ${DEFAULT}${ITALICS}${Detected_Env}${DEFAULT}"
 msg_info "${BOLD}Detected OS: ${DEFAULT}${ITALICS}${Detected_OS} ${Detected_Version}${DEFAULT}"
 msg_info "${BOLD}Detected architecture: ${DEFAULT}${ITALICS}${Detected_Architecture}${DEFAULT}"
